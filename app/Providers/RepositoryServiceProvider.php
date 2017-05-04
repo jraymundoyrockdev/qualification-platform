@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Modules\Assessor\Assessor;
-use App\Modules\Course\Course;
 use App\Modules\Industry\Industry;
 use App\Modules\Occupation\Occupation;
 use App\Modules\Package\Package;
@@ -13,7 +12,6 @@ use App\Modules\Scientist\Scientist;
 use App\Modules\Theory\Theory;
 use App\Modules\Unit\Unit;
 use App\Repositories\Contracts\AssessorRepository;
-use App\Repositories\Contracts\CourseRepository;
 use App\Repositories\Contracts\IndustryRepository;
 use App\Repositories\Contracts\OccupationRepository;
 use App\Repositories\Contracts\PackageRepository;
@@ -24,7 +22,6 @@ use App\Repositories\Contracts\TheoryRepository;
 use App\Repositories\Contracts\UnitRepository;
 use App\Repositories\Contracts\UserRepository;
 use App\Repositories\Doctrines\DoctrineAssessorRepository;
-use App\Repositories\Doctrines\DoctrineCourseRepository;
 use App\Repositories\Doctrines\DoctrineIndustryRepository;
 use App\Repositories\Doctrines\DoctrineOccupationRepository;
 use App\Repositories\Doctrines\DoctrinePackageRepository;
@@ -60,10 +57,6 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->bind(UnitRepository::class, function ($app) {
             return new DoctrineUnitRepository($app['em'], $app['em']->getClassMetaData(Unit::class));
-        });
-
-        $this->app->bind(CourseRepository::class, function ($app) {
-            return new DoctrineCourseRepository($app['em'], $app['em']->getClassMetaData(Course::class));
         });
 
         $this->app->bind(UserRepository::class, function ($app) {

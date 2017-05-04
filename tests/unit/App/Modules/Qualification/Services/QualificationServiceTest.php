@@ -32,9 +32,9 @@ class QualificationServiceTest extends BaseTestCase
         $title = $faker->word;
         $description = $faker->sentence;
         $subjectInformation = $faker->sentence;
-        $isSuperseded = $faker->randomElement(['no', 'yes']);
+        $currencyStatus = $faker->randomElement(['no', 'yes']);
 
-        $payload = $this->createAnInsertPayload($code, $title, $description, $subjectInformation, $isSuperseded);
+        $payload = $this->createAnInsertPayload($code, $title, $description, $subjectInformation, $currencyStatus);
 
         $result = $this->service->insert($payload);
 
@@ -43,7 +43,7 @@ class QualificationServiceTest extends BaseTestCase
         $this->assertEquals($title, $result->getTitle());
         $this->assertEquals($description, $result->getDescription());
         $this->assertEquals($subjectInformation, $result->getSubjectInformation());
-        $this->assertEquals($isSuperseded, $result->getIsSuperseded());
+        $this->assertEquals($currencyStatus, $result->getCurrencyStatus());
 
         $databaseResult = $this->repository->findOneBy(['id' => $result->getId()]);
 
@@ -51,7 +51,7 @@ class QualificationServiceTest extends BaseTestCase
         $this->assertEquals($title, $databaseResult->getTitle());
         $this->assertEquals($description, $databaseResult->getDescription());
         $this->assertEquals($subjectInformation, $databaseResult->getSubjectInformation());
-        $this->assertEquals($isSuperseded, $databaseResult->getIsSuperseded());
+        $this->assertEquals($currencyStatus, $databaseResult->getCurrencyStatus());
     }
 
     /** @test */
@@ -65,9 +65,9 @@ class QualificationServiceTest extends BaseTestCase
         $title = $faker->word;
         $description = $faker->sentence;
         $subjectInformation = $faker->sentence;
-        $isSuperseded = $faker->randomElement(['no', 'yes']);
+        $currencyStatus = $faker->randomElement(['no', 'yes']);
 
-        $payload = $this->createAnUpdatePayload($qualification->getId(), $code, $title, $description, $subjectInformation, $isSuperseded);
+        $payload = $this->createAnUpdatePayload($qualification->getId(), $code, $title, $description, $subjectInformation, $currencyStatus);
 
         $result = $this->service->update($qualification, $payload);
 
@@ -76,7 +76,7 @@ class QualificationServiceTest extends BaseTestCase
         $this->assertEquals($title, $result->getTitle());
         $this->assertEquals($description, $result->getDescription());
         $this->assertEquals($subjectInformation, $result->getSubjectInformation());
-        $this->assertEquals($isSuperseded, $result->getIsSuperseded());
+        $this->assertEquals($currencyStatus, $result->getCurrencyStatus());
 
         $databaseResult = $this->repository->findOneBy(['id' => $result->getId()]);
 
@@ -84,7 +84,7 @@ class QualificationServiceTest extends BaseTestCase
         $this->assertEquals($title, $databaseResult->getTitle());
         $this->assertEquals($description, $databaseResult->getDescription());
         $this->assertEquals($subjectInformation, $databaseResult->getSubjectInformation());
-        $this->assertEquals($isSuperseded, $databaseResult->getIsSuperseded());
+        $this->assertEquals($currencyStatus, $databaseResult->getCurrencyStatus());
     }
 
     /**
@@ -92,11 +92,11 @@ class QualificationServiceTest extends BaseTestCase
      * @param string $title
      * @param string $description
      * @param string $subjectInformation
-     * @param string $isSuperseded
+     * @param string $currencyStatus
      *
      * @return array
      */
-    private function createAnInsertPayload($code, $title, $description, $subjectInformation, $isSuperseded)
+    private function createAnInsertPayload($code, $title, $description, $subjectInformation, $currencyStatus)
     {
         return [
             'data' => [
@@ -106,7 +106,7 @@ class QualificationServiceTest extends BaseTestCase
                     'title' => $title,
                     'description' => $description,
                     'subject_information' => $subjectInformation,
-                    'is_superseded' => $isSuperseded,
+                    'currency_status' => $currencyStatus,
                 ]
             ]
         ];
@@ -118,11 +118,11 @@ class QualificationServiceTest extends BaseTestCase
      * @param string $title
      * @param string $description
      * @param string $subjectInformation
-     * @param string $isSuperseded
+     * @param string $currencyStatus
      *
      * @return array
      */
-    private function createAnUpdatePayload($id, $code, $title, $description, $subjectInformation, $isSuperseded)
+    private function createAnUpdatePayload($id, $code, $title, $description, $subjectInformation, $currencyStatus)
     {
         return [
             'data' => [
@@ -133,7 +133,7 @@ class QualificationServiceTest extends BaseTestCase
                     'title' => $title,
                     'description' => $description,
                     'subject_information' => $subjectInformation,
-                    'is_superseded' => $isSuperseded,
+                    'currency_status' => $currencyStatus,
                 ]
             ]
         ];

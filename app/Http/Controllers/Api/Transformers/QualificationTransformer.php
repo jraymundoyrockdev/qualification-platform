@@ -20,7 +20,7 @@ class QualificationTransformer extends TransformerAbstract
             'title' => $qualification->getTitle(),
             'description' => $qualification->getDescription(),
             'subject_information' => $qualification->getSubjectInformation(),
-            'is_superseded' => $qualification->getIsSuperseded(),
+            'currency_status' => $qualification->getCurrencyStatus(),
             'links' => ['uri' => '/qualification/' . $qualification->getId()]
         ];
     }

@@ -23,6 +23,6 @@ class QualificationFactoryTest extends BaseTestCase
         $this->assertEquals($title, $qualification->getTitle());
         $this->assertEquals($description, $qualification->getDescription());
         $this->assertEquals($subjectInformation, $qualification->getSubjectInformation());
-        $this->assertEquals('no', $qualification->getIsSuperseded());
+        $this->assertEquals('current', $qualification->getCurrencyStatus());
     }
 }

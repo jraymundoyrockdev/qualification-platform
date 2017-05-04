@@ -4,7 +4,7 @@ namespace App\Services\Sync;
 
 use App\Exceptions\PageNotFoundException;
 use App\Exceptions\NotAValidQualificationException;
-use App\Modules\Qualification\QualificationFactory;
+use App\Modules\Qualification\QualificationBuilder;
 use App\Repositories\Contracts\QualificationRepository;
 use App\Services\Sync\TGASOAP;
 
@@ -13,15 +13,17 @@ class SyncQualificationService
     const HTML_URL = 'http://training.gov.au/Training/Details/';
 		const WSDL = 'https://ws.training.gov.au/Deewr.Tga.Webservices/TrainingComponentServiceV4.svc?wsdl';
     //const WSDL = 'https://ws.training.gov.au/Deewr.Tga.Webservices/OrganisationServiceV4.svc?wsdl';
-    
+
     protected $qualification;
     protected $soapClient;
     protected $isCoreOrElective = ["" => 'elective', "0" => 'elective', "1" =>'core'];
+    protected $qualificationBuilder;
 
-    public function __construct(QualificationRepository $qualification, TGASOAP $soapClient)
+    public function __construct(QualificationRepository $qualification, TGASOAP $soapClient, QualificationBuilder $qualificationBuilder)
     {
         $this->qualification = $qualification;
         $this->soapClient = $soapClient;
+        $this->qualificationBuilder = $qualificationBuilder;
     }
 
     public function sync($qualificationCode)
@@ -42,14 +44,23 @@ class SyncQualificationService
             throw new NotAValidQualificationException();
         }
 
-        $qualification = QualificationFactory::factory(
+          $qualification = QualificationBuilder::instance()->buildInformation(
+              $qualificationCode,
+              $this->getTitle($htmlContent),
+              $this->getDescription($htmlContent),
+              $this->getPackagingRules($htmlContent),
+              strtolower($qualificationFromSoap->GetDetailsResult->CurrencyStatus)
+          );
+
+          print_r($qualification); die;
+    /*    $qualification = QualificationFactory::factory(
             $qualificationCode,
             $this->getTitle($htmlContent),
             $this->getDescription($htmlContent),
             $this->getPackagingRules($htmlContent),
-            $this->getCurrencyIfSuperseded($qualificationFromSoap->GetDetailsResult->CurrencyStatus)
+            strtolower($qualificationFromSoap->GetDetailsResult->CurrencyStatus)
         );
-
+*/
         $this->qualification->create($qualification);
 
         return $qualification;

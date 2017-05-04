@@ -7,6 +7,6 @@ $factory->define(\App\Modules\Qualification\Qualification::class, function (Fake
         'title' => $faker->name,
         'description' => $faker->sentence,
         'subject_information' => $faker->sentence,
-        'is_superseded' => $faker->randomElement(['yes', 'no'])
+        'currency_status' => $faker->randomElement(['current', 'CHC40313'])
     ];
 });

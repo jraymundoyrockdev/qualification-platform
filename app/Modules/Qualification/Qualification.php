@@ -42,9 +42,14 @@ class Qualification
     protected $subject_information;
 
     /**
-     * @ORM\Column(type="text", options={"default":"no"})
+     * @ORM\Column(type="text", options={"default":"current"})
      */
-    protected $is_superseded;
+    protected $currency_status;
+
+    /**
+     * @ORM\Column(type="text", options={"default":"active"})
+     */
+    protected $status;
 
     /**
      * @var \DateTime $created
@@ -63,15 +68,9 @@ class Qualification
     /**
      * Qualification constructor.
      */
-    public function __construct($code, $title, $description, $subjectInformation, $isSuperseded = 'no')
+    public function __construct()
     {
-        $this->id = Uuid::uuid4();
 
-        $this->code = $code;
-        $this->title = $title;
-        $this->description = $description;
-        $this->subject_information = $subjectInformation;
-        $this->is_superseded = $isSuperseded;
     }
 
     /**
@@ -195,27 +194,27 @@ class Qualification
     }
 
     /**
-     * Set isSuperseded
+     * Set CurrencyStatus
      *
-     * @param bool $isSuperseded
+     * @param bool $currencyStatus
      *
      * @return Qualification
      */
-    public function setIsSuperseded($isSuperseded)
+    public function setCurrencyStatus($currencyStatus)
     {
-        $this->is_superseded = $isSuperseded;
+        $this->currency_status = $currencyStatus;
 
         return $this;
     }
 
     /**
-     * Get isSuperseded
+     * Get currencyStatus
      *
      * @return string
      */
-    public function getIsSuperseded()
+    public function getCurrencyStatus()
     {
-        return $this->is_superseded;
+        return $this->currency_status;
     }
 
     /**

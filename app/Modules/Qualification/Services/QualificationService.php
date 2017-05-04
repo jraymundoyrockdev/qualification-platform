@@ -44,7 +44,7 @@ class QualificationService extends AbstractModuleService implements ModuleServic
             $attributes['title'],
             $attributes['description'],
             $attributes['subject_information'],
-            $attributes['is_superseded']
+            $attributes['currency_status']
         );
 
         return $this->repository->create($qualification);
@@ -64,7 +64,7 @@ class QualificationService extends AbstractModuleService implements ModuleServic
         $entity->setTitle($attributes['title']);
         $entity->setDescription($attributes['description']);
         $entity->setSubjectInformation($attributes['subject_information']);
-        $entity->setIsSuperseded($attributes['is_superseded']);
+        $entity->setCurrencyStatus($attributes['currency_status']);
 
         $this->repository->update();
 

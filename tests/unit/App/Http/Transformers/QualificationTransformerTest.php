@@ -21,7 +21,7 @@ class QualificationTransformerTest extends BaseTestCase
             'title',
             'description',
             'subject_information',
-            'is_superseded',
+            'currency_status',
             'links'
         ];
 
