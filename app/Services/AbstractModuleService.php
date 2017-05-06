@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-abstract class AbstractModuleService
+class AbstractModuleService
 {
     protected $repository;
 

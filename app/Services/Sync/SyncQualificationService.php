@@ -4,7 +4,7 @@ namespace App\Services\Sync;
 
 use App\Exceptions\PageNotFoundException;
 use App\Exceptions\NotAValidQualificationException;
-use App\Modules\Qualification\QualificationBuilder;
+use App\Modules\Qualification\Services\QualificationService;
 use App\Repositories\Contracts\QualificationRepository;
 use App\Services\Sync\TGASOAP;
 
@@ -14,16 +14,15 @@ class SyncQualificationService
 		const WSDL = 'https://ws.training.gov.au/Deewr.Tga.Webservices/TrainingComponentServiceV4.svc?wsdl';
     //const WSDL = 'https://ws.training.gov.au/Deewr.Tga.Webservices/OrganisationServiceV4.svc?wsdl';
 
-    protected $qualification;
+    protected $qualificationService;
     protected $soapClient;
     protected $isCoreOrElective = ["" => 'elective', "0" => 'elective', "1" =>'core'];
     protected $qualificationBuilder;
 
-    public function __construct(QualificationRepository $qualification, TGASOAP $soapClient, QualificationBuilder $qualificationBuilder)
+    public function __construct(TGASOAP $soapClient, QualificationService $qualificationService)
     {
-        $this->qualification = $qualification;
+        $this->qualificationService = $qualificationService;
         $this->soapClient = $soapClient;
-        $this->qualificationBuilder = $qualificationBuilder;
     }
 
     public function sync($qualificationCode)
@@ -44,26 +43,21 @@ class SyncQualificationService
             throw new NotAValidQualificationException();
         }
 
-          $qualification = QualificationBuilder::instance()->buildInformation(
-              $qualificationCode,
-              $this->getTitle($htmlContent),
-              $this->getDescription($htmlContent),
-              $this->getPackagingRules($htmlContent),
-              strtolower($qualificationFromSoap->GetDetailsResult->CurrencyStatus)
-          );
+        $qualification = [
+            'code' => $qualificationCode,
+            'title' => $this->getTitle($htmlContent),
+            'description' => $this->getDescription($htmlContent),
+            'packaging_rules' => $this->getPackagingRules($htmlContent),
+            'currency_status' => $this->getCurrencyStatus($qualificationFromSoap->GetDetailsResult),
+            'status' => 'active',
+            'aqf_level' => 'Certifcate  ',
+            'online_learning_status' => 'active',
+            'rpl_status' => 'active',
+            'expiration_date' => date('Y-m-d'),
+            'created_by' => 'jraymundo'
+        ];
 
-          print_r($qualification); die;
-    /*    $qualification = QualificationFactory::factory(
-            $qualificationCode,
-            $this->getTitle($htmlContent),
-            $this->getDescription($htmlContent),
-            $this->getPackagingRules($htmlContent),
-            strtolower($qualificationFromSoap->GetDetailsResult->CurrencyStatus)
-        );
-*/
-        $this->qualification->create($qualification);
-
-        return $qualification;
+        return $this->qualificationService->insert($qualification);
     }
 
     public function syncAll()
@@ -190,6 +184,11 @@ class SyncQualificationService
         $result = str_replace('<h2>Packaging Rules</h2>', '', $result);
 
         return $result;
+      }
+
+      private function getCurrencyStatus($qualificationFromSoap)
+      {
+          return strtolower($qualificationFromSoap->CurrencyStatus);
       }
 
       private function getCurrencyIfSuperseded($currency)

@@ -21,26 +21,34 @@ class QualificationBuilder
         return $this->qualification;
     }
 
-    public function buildMainInformation($code, $title, $description, $subjectInformation, $currencyStatus, $status='active')
+    public function buildInformation($code, $title, $description, $packagingRules, $currencyStatus)
     {
-        $this->id = Uuid::uuid4();
+        $this->qualification->setId(Uuid::uuid4());
 
+        $this->qualification->setCode($code);
+        $this->qualification->setTitle($title);
+        $this->qualification->setDescription($description);
+        $this->qualification->setPackagingRules($packagingRules);
+        $this->qualification->setCurrencyStatus($currencyStatus);
 
-        $this->qualifcation->setCode($code);
-        $this->qualifcation->setTitle($title);
-        $this->description = $description;
-        $this->subject_information = $subjectInformation;
-        $this->currency_status = $currencyStatus;
-        $this->status = $status;
+        return $this;
     }
 
-    public function buildCourseDelivery($isOnlineLearning = true, $isRPL = true)
+    public function buildCourseDelivery($onlineLearningStatus, $rplStatus)
     {
+        $this->qualification->setOnlineLearningStatus($onlineLearningStatus);
+        $this->qualification->setRplStatus($rplStatus);
 
+        return $this;
     }
 
-    public function buildRPLPricing($rplCost = 0, $traditionalStudy = 0, $customerSavings = 0)
+    public function buildOtherInformation($aqfLevel, $status, $expirationDate, $createdBy)
     {
+        $this->qualification->setAqfLevel($aqfLevel);
+        $this->qualification->setStatus($status);
+        $this->qualification->setExpirationDate($expirationDate);
+        $this->qualification->setCreatedBy($createdBy);
 
+        return $this;
     }
 }

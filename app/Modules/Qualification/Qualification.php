@@ -27,7 +27,7 @@ class Qualification
     protected $code;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", length=256)
      */
     protected $title;
 
@@ -39,17 +39,42 @@ class Qualification
     /**
      * @ORM\Column(type="text")
      */
-    protected $subject_information;
+    protected $packaging_rules;
 
     /**
-     * @ORM\Column(type="text", options={"default":"current"})
+     * @ORM\Column(type="string", length=100, options={"default":"current"})
      */
     protected $currency_status;
 
     /**
-     * @ORM\Column(type="text", options={"default":"active"})
+     * @ORM\Column(type="string",length=100, options={"default":"active"})
      */
     protected $status;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable = true)
+     */
+    protected $aqf_level;
+
+    /**
+     * @ORM\Column(type="string", length=10, options={"default":"active"})
+     */
+    protected $online_learning_status;
+
+    /**
+     * @ORM\Column(type="string", length=10, options={"default":"active"})
+     */
+    protected $rpl_status;
+
+    /**
+     * @ORM\Column(type="string", length=15)
+     */
+    protected $expiration_date;
+
+    /**
+     * @ORM\Column(type="string", length=50, nullable = false)
+     */
+    protected $created_by;
 
     /**
      * @var \DateTime $created
@@ -170,27 +195,27 @@ class Qualification
     }
 
     /**
-     * Set subjectInformation
+     * Set packagingRules
      *
-     * @param string $subjectInformation
+     * @param string $packagingRules
      *
      * @return Qualification
      */
-    public function setSubjectInformation($subjectInformation)
+    public function setPackagingRules($packagingRules)
     {
-        $this->subject_information = $subjectInformation;
+        $this->packaging_rules = $packagingRules;
 
         return $this;
     }
 
     /**
-     * Get subjectInformation
+     * Get packagingRules
      *
      * @return string
      */
-    public function getSubjectInformation()
+    public function getPackagingRules()
     {
-        return $this->subject_information;
+        return $this->packaging_rules;
     }
 
     /**
@@ -215,6 +240,150 @@ class Qualification
     public function getCurrencyStatus()
     {
         return $this->currency_status;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Qualification
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set aqf_level
+     *
+     * @param string $aqfLevel
+     *
+     * @return Qualification
+     */
+    public function setAqfLevel($aqfLevel)
+    {
+        $this->aqf_level = $aqfLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getAqfLevel()
+    {
+        return $this->aqf_level;
+    }
+
+    /**
+     * Set online_learning_status
+     *
+     * @param string $onlineLearningStatus
+     *
+     * @return Qualification
+     */
+    public function setOnlineLearningStatus($onlineLearningStatus)
+    {
+        $this->online_learning_status = $onlineLearningStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get online_learning_status
+     *
+     * @return string
+     */
+    public function getOnlineLearningStatus()
+    {
+        return $this->online_learning_status;
+    }
+
+    /**
+     * Set rpl_status
+     *
+     * @param string $rplStatus
+     *
+     * @return Qualification
+     */
+    public function setRplStatus($rplStatus)
+    {
+        $this->rpl_status = $rplStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get rpl_status
+     *
+     * @return string
+     */
+    public function getRplStatus()
+    {
+        return $this->rpl_status;
+    }
+
+    /**
+     * Set expirationDate
+     *
+     * @param string $expirationDate
+     *
+     * @return Qualification
+     */
+    public function setExpirationDate($expirationDate)
+    {
+        $this->expiration_date = $expirationDate;
+
+        return $this;
+    }
+
+    /**
+     * Get expirationDate
+     *
+     * @return string
+     */
+    public function getExpirationDate()
+    {
+        return $this->expiration_date;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param string $createdBy
+     *
+     * @return Qualification
+     */
+    public function setCreatedBy($createdBy)
+    {
+        $this->created_by = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return string
+     */
+    public function getCreatedBy()
+    {
+        return $this->created_by;
     }
 
     /**
