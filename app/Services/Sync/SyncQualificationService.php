@@ -50,14 +50,25 @@ class SyncQualificationService
             'packaging_rules' => $this->getPackagingRules($htmlContent),
             'currency_status' => $this->getCurrencyStatus($qualificationFromSoap->GetDetailsResult),
             'status' => 'active',
-            'aqf_level' => 'Certifcate  ',
+            'aqf_level' => $this->getAqf($qualificationFromSoap->GetDetailsResult->Title),
             'online_learning_status' => 'active',
             'rpl_status' => 'active',
-            'expiration_date' => date('Y-m-d'),
+            'expiration_date' => $this->getExpirationDate($qualificationFromSoap->GetDetailsResult),
             'created_by' => 'jraymundo'
         ];
 
         return $this->qualificationService->insert($qualification);
+    }
+
+    private function getAqf($title)
+    {
+        if (stristr($title, 'Certificate') === FALSE) {
+            return '';
+        }
+
+        $explodedTitle = explode(' ', $title);
+
+        return $explodedTitle[0] . ' ' . $explodedTitle[1];
     }
 
     public function syncAll()
@@ -189,6 +200,20 @@ class SyncQualificationService
       private function getCurrencyStatus($qualificationFromSoap)
       {
           return strtolower($qualificationFromSoap->CurrencyStatus);
+      }
+
+      private function getExpirationDate($qualificationFromSoap)
+      {
+          if (!empty($qualificationFromSoap->UpdatedDate)) {
+              return $this->convertExpirationDate($qualificationFromSoap->UpdatedDate->DateTime);
+          }
+
+          return $this->convertExpirationDate($qualificationFromSoap->CreatedDate->DateTime);
+      }
+
+      private function convertExpirationDate($date)
+      {
+          return date('Y-m-d', strtotime($date));
       }
 
       private function getCurrencyIfSuperseded($currency)

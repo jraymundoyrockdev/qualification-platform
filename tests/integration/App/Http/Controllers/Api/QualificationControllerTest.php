@@ -121,7 +121,7 @@ class QualificationControllerTest extends BaseTestCase
         $this->assertArrayHasOnlyKeys(['data', 'links'], $this->toArray($result));
 
         $this->assertArrayHasOnlyKeys(
-            ['code', 'title', 'description', 'subject_information', 'currency_status'],
+            ['code', 'title', 'description', 'packaging_rules', 'currency_status', 'status', 'aqf_level', 'online_learning_status', 'rpl_status', 'expiration_date', 'created_by'],
             $this->toArray($result->data->attributes)
         );
         $this->assertEquals($uuid, $result->data->id);
@@ -150,7 +150,7 @@ class QualificationControllerTest extends BaseTestCase
         $result = $this->getContent();
 
         $this->assertArrayHasOnlyKeys(
-            ['code', 'title', 'description', 'subject_information', 'currency_status'],
+            ['code', 'title', 'description', 'packaging_rules', 'currency_status', 'status', 'aqf_level', 'online_learning_status', 'rpl_status', 'expiration_date', 'created_by'],
             $this->toArray($result->data[0]->data->attributes)
         );
 

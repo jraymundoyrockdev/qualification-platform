@@ -20,8 +20,14 @@ class QualificationTransformerTest extends BaseTestCase
             'code',
             'title',
             'description',
-            'subject_information',
+            'packaging_rules',
             'currency_status',
+            'status',
+            'aqf_level',
+            'online_learning_status',
+            'rpl_status',
+            'expiration_date',
+            'created_by',
             'links'
         ];
 

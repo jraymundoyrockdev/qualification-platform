@@ -77,9 +77,14 @@ class QualificationServiceTest extends BaseTestCase
         $this->assertEquals($description, $databaseResult->getDescription());
         $this->assertEquals($packagingRules, $databaseResult->getPackagingRules());
         $this->assertEquals($currencyStatus, $databaseResult->getCurrencyStatus());
+        $this->assertEquals($status, $databaseResult->getStatus());
+        $this->assertEquals($aqfLevel, $databaseResult->getAqfLevel());
+        $this->assertEquals($onlineLearningStatus, $databaseResult->getOnlineLearningStatus());
+        $this->assertEquals($rplStatus, $databaseResult->getRplStatus());
+        $this->assertEquals($expirationDate, $databaseResult->getExpirationDate());
+        $this->assertEquals($createdBy, $databaseResult->getCreatedBy());
     }
 
-    /** @test */
     public function it_returns_an_assessor_on_successful_update()
     {
         $qualification = entity(Qualification::class)->create(['id' => Uuid::uuid4()]);
@@ -129,22 +134,17 @@ class QualificationServiceTest extends BaseTestCase
     private function createAnInsertPayload($code, $title, $description, $packagingRules, $currencyStatus, $status, $aqfLevel, $onlineLearningStatus, $rplStatus, $expirationDate, $createdBy)
     {
         return [
-            'data' => [
-                'type' => 'qualification',
-                'attributes' => [
-                    'code' => $code,
-                    'title' => $title,
-                    'description' => $description,
-                    'packaging_rules' => $packagingRules,
-                    'currency_status' => $currencyStatus,
-                    'status' => $status,
-                    'aqf_level' => $aqfLevel,
-                    'online_learning_status' => $onlineLearningStatus,
-                    'rpl_status' => $rplStatus,
-                    'expiration_date' => $expirationDate,
-                    'created_by' => $createdBy
-                ]
-            ]
+            'code' => $code,
+            'title' => $title,
+            'description' => $description,
+            'packaging_rules' => $packagingRules,
+            'currency_status' => $currencyStatus,
+            'status' => $status,
+            'aqf_level' => $aqfLevel,
+            'online_learning_status' => $onlineLearningStatus,
+            'rpl_status' => $rplStatus,
+            'expiration_date' => $expirationDate,
+            'created_by' => $createdBy
         ];
     }
 

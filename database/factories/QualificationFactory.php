@@ -6,7 +6,7 @@ $factory->define(\App\Modules\Qualification\Qualification::class, function (Fake
         'code' => $faker->word,
         'title' => $faker->name,
         'description' => $faker->sentence,
-        'subject_information' => $faker->sentence,
+        'packaging_rules' => $faker->sentence,
         'currency_status' => $faker->randomElement(['current', 'CHC40313']),
         'status' => $faker->randomElement(['active', 'inactive']),
         'aqf_level' => $faker->word,

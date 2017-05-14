@@ -21,6 +21,12 @@ class QualificationTransformer extends TransformerAbstract
             'description' => $qualification->getDescription(),
             'packaging_rules' => $qualification->getPackagingRules(),
             'currency_status' => $qualification->getCurrencyStatus(),
+            'status' => 'active',
+            'aqf_level' => $qualification->getAqfLevel(),
+            'online_learning_status' => 'active',
+            'rpl_status' => 'active',
+            'expiration_date' => $qualification->getExpirationDate(),
+            'created_by' => $qualification->getCreatedBy(),
             'links' => ['uri' => '/qualification/' . $qualification->getId()]
         ];
     }
