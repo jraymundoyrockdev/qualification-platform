@@ -64,6 +64,39 @@ class JsonApiSerializerCustom extends ArraySerializer
     }
 
     /**
+     * Serialize an item.
+     *
+     * @param string $resourceKey
+     * @param array $data
+     *
+     * @return array
+     */
+    public function itemForCollection($resourceKey, array $data)
+    {
+        $id = $this->getIdFromData($data);
+
+        $resource = [
+
+                'type' => $resourceKey,
+                'id' => "$id",
+                'attributes' => $data
+
+        ];
+
+        unset($resource['attributes']['id']);
+
+        $resource['links']['self'] = "{$this->baseApiUrl}" . $resource['attributes']['links']['uri'];
+
+        unset($resource['attributes']['links']);
+
+        if (array_key_exists('relationships', $resource['attributes'])) {
+            $resource['data']['relationships'] = $resource['attributes']['relationships'];
+            unset($resource['attributes']['relationships']);
+        }
+        return $resource;
+    }
+
+    /**
      * Serialize a collection.
      *
      * @param string $resourceKey
@@ -76,7 +109,7 @@ class JsonApiSerializerCustom extends ArraySerializer
         $resources = [];
 
         foreach ($data as $resource) {
-            $resources[] = $this->item($resourceKey, $resource);
+            $resources[] = $this->itemForCollection($resourceKey, $resource);
         }
 
         return [
