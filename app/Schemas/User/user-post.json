@@ -1,0 +1,71 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "additionalProperties": false,
+    "definitions": {},
+    "id": "http://api.elisse.com.au/api/user",
+    "properties": {
+        "data": {
+            "additionalProperties": false,
+            "id": "/properties/data",
+            "properties": {
+                "attributes": {
+                    "additionalProperties": false,
+                    "id": "/properties/data/properties/attributes",
+                    "properties": {
+                        "firstname": {
+                            "id": "/properties/data/properties/attributes/properties/firstname",
+                            "type": "string"
+                        },
+                        "lastname": {
+                            "id": "/properties/data/properties/attributes/properties/lastname",
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        },
+                        "middlename": {
+                            "id": "/properties/data/properties/attributes/properties/middlename",
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        },
+                        "password": {
+                            "id": "/properties/data/properties/attributes/properties/password",
+                            "type": "string"
+                        },
+                        "role": {
+                            "default": "user",
+                            "id": "/properties/data/properties/attributes/properties/role",
+                            "type": "string"
+                        },
+                        "username": {
+                            "id": "/properties/data/properties/attributes/properties/username",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "username",
+                        "firstname",
+                        "role",
+                        "password"
+                    ],
+                    "type": "object"
+                },
+                "type": {
+                    "id": "/properties/data/properties/type",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "attributes",
+                "type"
+            ],
+            "type": "object"
+        }
+    },
+    "required": [
+        "data"
+    ],
+    "type": "object"
+}

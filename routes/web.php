@@ -47,6 +47,8 @@ $app->group([
     $app->get('qualification/{id}', ['uses' => 'QualificationController@show']);
     $app->get('qualification', ['uses' => 'QualificationController@all']);
 
+    $app->get('user/{id}', ['uses' => 'UserController@show']);
+    $app->get('user', ['uses' => 'UserController@all']);
 });
 
 $app->group([
@@ -61,4 +63,6 @@ $app->group([
     $app->put('assessor/{id}', ['uses' => 'AssessorController@update']);
 
     $app->post('qualification-add-from-tga', ['uses' => 'QualificationController@addFromTga']);
+
+    $app->post('user', ['uses' => 'UserController@create']);
 });

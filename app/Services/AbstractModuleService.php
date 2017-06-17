@@ -33,15 +33,4 @@ class AbstractModuleService
     {
         return $this->repository->findAll();
     }
-
-    /**
-     * @param string $attribute
-     * @param string $value
-     *
-     * @return mixed
-     */
-    public function findOneByAttribute($attribute, $value)
-    {
-        return $this->repository->findOneBy([$attribute => $value]);
-    }
 }

@@ -8,6 +8,7 @@ use App\Http\Response\ErrorResponse;
 use App\Http\Response\FractalResponse;
 use Illuminate\Contracts\Auth\Guard;
 use JWTAuth;
+use JWTFactory;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthenticationController extends ApiController
@@ -42,7 +43,17 @@ class AuthenticationController extends ApiController
             return $this->response->error()->respondUnprocessableEntity('Invalid Credentials.');
         }
 
-        $token = JWTAuth::fromUser($this->auth->user());
+        $user = $this->auth->user();
+
+        $customClaims = [
+            'username' => $user->getUsername(),
+            'firstname' => $user->getFirstname(),
+            'middlename' => $user->getMiddlename(),
+            'lastname' => $user->getLastname(),
+            'role' => $user->getRole()
+        ];
+
+        $token = JWTAuth::fromUser($this->auth->user(), $customClaims);
 
         return $this->response->fractal()->outputToJson(['token' => $token]);
     }
